@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:%236366f1;stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='100' height='100' rx='20' fill='url(%23grad)'/%3e%3ccircle cx='35' cy='35' r='8' fill='white' opacity='0.9'/%3e%3ccircle cx='65' cy='35' r='8' fill='white' opacity='0.9'/%3e%3cpath d='M30 55 Q50 75 70 55' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' opacity='0.9'/%3e%3cpath d='M20 20 L80 80 M80 20 L20 80' stroke='white' stroke-width='2' opacity='0.3'/%3e%3c/svg%3e" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="FaceSync Pro - Advanced facial recognition and synchronization technology" />
+    <meta name="keywords" content="face recognition, facial sync, biometric, AI, computer vision" />
+    <meta name="author" content="FaceSync Pro" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FaceSync Pro" />
+    <meta property="og:description" content="Advanced facial recognition and synchronization technology" />
+    <meta property="og:image" content="/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="FaceSync Pro" />
+    <meta property="twitter:description" content="Advanced facial recognition and synchronization technology" />
+    
+    <title>FaceSync Pro</title>
+    
+    <style>
+      /* Loading screen styles */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      #loading-screen.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      
+      .logo {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .logo::before {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+        top: 16px;
+        left: 16px;
+        opacity: 0.9;
+      }
+      
+      .logo::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+        top: 16px;
+        right: 16px;
+        opacity: 0.9;
+      }
+      
+      .logo .smile {
+        position: absolute;
+        bottom: 18px;
+        width: 24px;
+        height: 12px;
+        border: 3px solid white;
+        border-top: none;
+        border-radius: 0 0 24px 24px;
+        opacity: 0.9;
+      }
+      
+      .logo .sync-lines {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+      }
+      
+      .logo .sync-lines::before,
+      .logo .sync-lines::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, white, transparent);
+        opacity: 0.3;
+        animation: sync 2s ease-in-out infinite;
+      }
+      
+      .logo .sync-lines::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+      
+      .logo .sync-lines::after {
+        top: 0;
+        transform: rotate(-45deg);
+        animation-delay: 1s;
+      }
+      
+      @keyframes sync {
+        0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(45deg); }
+        50% { opacity: 0.8; transform: scale(1.2) rotate(45deg); }
+      }
+      
+      .brand-name {
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        letter-spacing: -0.02em;
+      }
+      
+      .tagline {
+        color: rgba(255, 255, 255, 0.8);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-top: 8px;
+        text-align: center;
+      }
+      
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-top: 30px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading screen after page loads */
+      body.loaded #loading-screen {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div class="logo-container">
+        <div class="logo">
+          <div class="smile"></div>
+          <div class="sync-lines"></div>
+        </div>
+        <div class="brand-name">FaceSync Pro</div>
+      </div>
+      <div class="tagline">Advanced Facial Recognition Technology</div>
+      <div class="spinner"></div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <script>
+      // Hide loading screen after page loads
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.body.classList.add('loaded');
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>
